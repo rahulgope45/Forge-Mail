@@ -1,8 +1,11 @@
-import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
+import express, {} from 'express';
 const PORT = 3000;
 const app = express();
+app.use(express.json());
 app.get('/', (req, res) => {
-    res.send().json({ msg: "Server startup" });
+    res.json({ msg: "Server startup" });
 });
 app.listen(PORT, () => {
     console.log(`Server Started at:${PORT}`);
