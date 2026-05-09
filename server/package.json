@@ -24,8 +24,7 @@
     "express": "^5.2.1",
     "google-auth-library": "^10.6.2",
     "jsonwebtoken": "^9.0.3",
-    "pg": "^8.20.0",
-    "prisma-client": "^0.0.0"
+    "pg": "^8.20.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
