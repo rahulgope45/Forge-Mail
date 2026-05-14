@@ -1,4 +1,4 @@
-import { GoogleConfig } from "../types/auth.types.js";
+import type{ GoogleConfig } from "../types/auth.types.js";
 
 export const ggogleCOnfig: GoogleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID!,
