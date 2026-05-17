@@ -1,6 +1,6 @@
 import type{ GoogleConfig } from "../types/auth.types.js";
 
-export const ggogleCOnfig: GoogleConfig = {
+export const googleConfig: GoogleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID!,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     redirectUri: process.env.GOOGLE_REDIRECT_URI!,
