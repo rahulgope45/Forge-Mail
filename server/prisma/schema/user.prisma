@@ -1,6 +1,6 @@
 // ============== MODEL USER ===============
 
-model USER {
+model User {
     id        String   @unique @default(cuid())
     email     String   @unique
     name      String?
@@ -9,4 +9,6 @@ model USER {
     provider  String   @default("google")
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt()
+
+    @@map("users")
 }
