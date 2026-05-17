@@ -18,4 +18,13 @@ export interface GoogleTokenResponse {
     exprires_in: number;
     token_type: string;
 }
+export interface JwtPayload {
+    id: string;
+    email: string;
+    iat?: number;
+    exp?: number;
+}
+export interface AuthenticatedRequest extends Request {
+    user?: JwtPayload;
+}
 //# sourceMappingURL=auth.types.d.ts.map
