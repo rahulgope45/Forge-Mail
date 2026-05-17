@@ -1,6 +1,6 @@
 import type { Request } from "express";
 export interface GoogleConfig {
-    clientID: string
+    clientId: string
     clientSecret: string
     redirectUri: string
     scopes: string[]

@@ -2,7 +2,7 @@ import axios from "axios";
 import { googleConfig } from "../config/google.config.js";
 export const getGoogleAuthUrl = () => {
     const params = new URLSearchParams({
-        client_id: googleConfig.clientID,
+        client_id: googleConfig.clientId,
         redirect_uri: googleConfig.redirectUri,
         response_type: "code",
         scope: googleConfig.scopes.join(" "),
@@ -14,7 +14,7 @@ export const getGoogleAuthUrl = () => {
 export const exchangeCodeForToken = async (code) => {
     const { data } = await axios.post("https://oauth2.googleapis.com/token", {
         code,
-        client_id: googleConfig.clientID,
+        client_id: googleConfig.clientId,
         client_secret: googleConfig.clientSecret,
         redirect_uri: googleConfig.redirectUri,
         grant_type: "authorization_code",
