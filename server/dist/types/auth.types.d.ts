@@ -1,3 +1,4 @@
+import type { Request } from "express";
 export interface GoogleConfig {
     clientID: string;
     clientSecret: string;
@@ -8,7 +9,7 @@ export interface GoogleUser {
     id: string;
     email: string;
     name: string;
-    picture: string;
+    avatar: string;
     verified_email: boolean;
 }
 export interface GoogleTokenResponse {
