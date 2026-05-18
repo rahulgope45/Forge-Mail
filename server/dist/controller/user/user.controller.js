@@ -21,13 +21,13 @@ export const googleCallback = async (req, res) => {
             update: {
                 email: googleUser.email,
                 name: googleUser.name,
-                avatar: googleUser.avatar,
+                avatar: googleUser.picture,
             },
             create: {
                 googleID: googleUser.id,
                 email: googleUser.email,
                 name: googleUser.name,
-                avatar: googleUser.avatar,
+                avatar: googleUser.picture,
             },
         });
         const jwt = genrateJWT({ id: user.id, email: user.email });

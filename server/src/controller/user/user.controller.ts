@@ -29,13 +29,13 @@ export const googleCallback = async (
             update: {
                 email: googleUser.email,
                 name: googleUser.name,
-                avatar: googleUser.avatar,
+                avatar: googleUser.picture,
             },
             create: {
                 googleID: googleUser.id,
                 email: googleUser.email,
                 name: googleUser.name,
-                avatar: googleUser.avatar,
+                avatar: googleUser.picture,
             },
         });
 
@@ -49,6 +49,7 @@ export const googleCallback = async (
         //============ Path has no decided yet =====
         res.redirect("/")
         console.log(`${user.name} Logged In  succesfully`)
+       
     } catch (error) {
         console.error("OAuth callback error:", error);
         res.status(500).json({ error: "Authentication failed" });

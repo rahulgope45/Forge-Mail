@@ -9,7 +9,7 @@ export interface GoogleUser {
     id: string;
     email: string;
     name: string;
-    avatar: string;
+    picture: string;
     verified_email: boolean;
 }
 export interface GoogleTokenResponse {
