@@ -25,7 +25,12 @@ export interface JwtPayload {
     iat?: number;
     exp?: number;
 }
+export interface TokenPair {
+    accessToken: string;
+    refreshToken: string;
+}
 export interface AuthenticatedRequest extends Request {
     user?: JwtPayload;
+    refreshToken: string;
 }
 //# sourceMappingURL=auth.types.d.ts.map

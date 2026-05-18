@@ -1,14 +1,15 @@
 // ============== MODEL USER ===============
 
 model User {
-    id        String   @unique @default(cuid())
-    email     String   @unique
-    name      String?
-    avatar    String?
-    googleID  String   @unique
-    provider  String   @default("google")
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt()
+    id           String   @unique @default(cuid())
+    email        String   @unique
+    name         String?
+    avatar       String?
+    refreshToken String?
+    googleID     String   @unique
+    provider     String   @default("google")
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt()
 
     @@map("users")
 }
