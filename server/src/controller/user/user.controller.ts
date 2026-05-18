@@ -48,6 +48,7 @@ export const googleCallback = async (
 
         //============ Path has no decided yet =====
         res.redirect("/")
+        console.log(`${user.name} Logged In  succesfully`)
     } catch (error) {
         console.error("OAuth callback error:", error);
         res.status(500).json({ error: "Authentication failed" });
