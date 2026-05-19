@@ -29,22 +29,24 @@ export const googleCallback = async (req, res) => {
                 email: googleUser.email,
                 name: googleUser.name,
                 avatar: googleUser.picture,
+                refreshToken: refreshToken
             },
             create: {
                 googleID: googleUser.id,
                 email: googleUser.email,
                 name: googleUser.name,
                 avatar: googleUser.picture,
+                refreshToken: refreshToken
             },
         });
-        const jwt = genrateJWT({ id: user.id, email: user.email });
-        res.cookie("token", jwt, {
-            httpOnly: true,
-            secure: process.env.ENVIORNMENT === "production"
-        });
-        //============ Path has no decided yet =====
+        setTokenCookies(res, accessToken, refreshToken);
+        //============ Path no decided yet ===========
         res.redirect("/");
         console.log(`${user.name} Logged In  succesfully`);
+        // console.log("=== Token Debug ===");
+        // console.log("Access Token:", accessToken);
+        // console.log("Refresh Token:", refreshToken);
+        // console.log("===================");
     }
     catch (error) {
         console.error("OAuth callback error:", error);

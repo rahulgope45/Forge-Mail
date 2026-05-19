@@ -12,6 +12,8 @@ export const genrateRefreshToken = (payload: JwtPayload): string =>{
 export const generateTokenPair = (payload: JwtPayload):TokenPair=>({
     accessToken: genrateJWT(payload),
     refreshToken: genrateRefreshToken(payload),
+
+    
 })
 
 export const verifyJWT = (token: string):JwtPayload =>{
