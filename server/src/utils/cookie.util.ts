@@ -18,4 +18,4 @@ export const setTokenCookies =(res:Response,accessToken:string,refreshToken:stri
 export const clearTokenCookies = (res:Response):void=>{
     res.clearCookie("token");
     res.clearCookie("refreshToken",{path: 'api/auth/refresh'})
-}
+};

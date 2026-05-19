@@ -3,8 +3,11 @@ import type { Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
 import jwt from 'jsonwebtoken'
 import { exchangeCodeForToken, getGoogleAuthUrl, getGoogleUser } from "../../services/auth.service.js";
-import { genrateJWT } from "../../utils/token.util.js";
+import { generateTokenPair, genrateJWT, verifyRefreshToken } from "../../utils/token.util.js";
 import { prisma } from "../../lib/prisma.js";
+import { verify } from "node:crypto";
+import { error } from "node:console";
+import { clearTokenCookies, setTokenCookies } from "../../utils/cookie.util.js";
 
 
 export const googleLogin = async (req: Request, res: Response) => {
@@ -23,6 +26,12 @@ export const googleCallback = async (
         }
         const token = await exchangeCodeForToken(code);
         const googleUser = await getGoogleUser(token.access_token);
+
+        const {accessToken,refreshToken}= generateTokenPair({
+            id: googleUser.id,
+            email:  googleUser.email,
+        });
+
 
         const user = await prisma.user.upsert({
             where: { googleID: googleUser.id },
@@ -57,7 +66,54 @@ export const googleCallback = async (
     }
 }
 
-export const logout = (_req: Request, res: Response): void => {
-  res.clearCookie("token");
-  res.redirect("/");
+export const refresh = async (req:Request,res:Response):Promise<void>=>{
+ try {
+    const incomingRefreshToken = req.cookies?.refreshToken as string | undefined;
+    if(!incomingRefreshToken){
+        res.status(401).json({error: "No Refresh token"});
+        return;
+    }
+
+    const decoded = verifyRefreshToken(incomingRefreshToken);
+
+    //Checking token matches in the DB
+    const user= await prisma.user.findUnique({where:{id:decoded.id}});
+    if(!user || user.refreshToken !== incomingRefreshToken){
+        res.status(401).json({error:"Invalid refresh token"});
+        return;
+    }
+
+    const {accessToken ,refreshToken :newRefreshToken} = generateTokenPair({
+        id: user.id,
+        email: user.email
+    })
+
+    await prisma.user.update({
+        where: { id: user.id},
+        data: {refreshToken: newRefreshToken},
+    });
+
+    setTokenCookies(res,accessToken,newRefreshToken);
+    res.status(200).json({ message: "Tokens refreshed" });
+ } catch (error) {
+     res.status(401).json({ error: "Invalid or expired refresh token" });
+ }
+}
+
+export const logout = async(req: Request, res: Response): Promise<void> => {
+  try {
+    const  incomingRefreshToken = req.cookies?.refreshToken as string | undefined;
+
+    if(incomingRefreshToken){
+        const decoded = verifyRefreshToken(incomingRefreshToken)
+
+        await prisma.user.update({
+            where: {id: decoded.id},
+            data: {refreshToken:null}
+        });
+    }
+  } catch (error) {
+    clearTokenCookies(res);
+  res.status(200).json({ message: "Logged out" });
+  }
 };
