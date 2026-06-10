@@ -8,6 +8,7 @@ const PORT = 3000;
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+import { connectRedis } from './config/redis.js';
 app.get('/', (req, res) => {
     res.json({ msg: "Server startup" });
 });
@@ -19,6 +20,11 @@ const startServer = async () => {
     const isDataBaseConnectionOk = await testDatabaseConnection();
     if (!isDataBaseConnectionOk) {
         console.log("Error is Database Connection");
+    }
+    //======== Redis connection ===========
+    const isRedisConnected = await connectRedis();
+    if (!isRedisConnected) {
+        console.log("Error in Redis Connection");
     }
     app.listen(PORT, () => {
         console.log(`Server Started at:${PORT}`);
