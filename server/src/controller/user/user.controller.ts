@@ -8,6 +8,7 @@ import { prisma } from "../../lib/prisma.js";
 import { verify } from "node:crypto";
 import { error } from "node:console";
 import { clearTokenCookies, setTokenCookies } from "../../utils/cookie.util.js";
+import { sendWelcomeMail } from "../../services/mail.service.js";
 
 
 export const googleLogin = async (req: Request, res: Response) => {
@@ -53,6 +54,10 @@ export const googleCallback = async (
         });
 
         setTokenCookies(res, accessToken, refreshToken);
+
+        sendWelcomeMail(user.email, user.name || "").catch((err)=>
+        console.error("Failed to send welcome mail:", err)
+        )
 
         //============ Path no decided yet ===========
         res.redirect("/")
