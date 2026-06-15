@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import {prisma,testDatabaseConnection} from './lib/prisma.js'
 import authRoutes from './routes/auth.routes.js'
 import { connectRedis } from './config/redis.js';
+import { testMailerConnection } from './lib/mailer.js';
 
 const PORT = 3000;
 const app = express();
@@ -35,6 +36,12 @@ const startServer = async ()=>{
  if(!isRedisConnected){
     console.log("Error in Redis Connection")
  }
+
+ // ======== User returning Mailer ====
+ const isMailerOk = testMailerConnection();
+ if(!isMailerOk){
+    console.log("Error in Redis Connection")
+ };
 
  app.listen(PORT,()=>{
     console.log(`Server Started at:${PORT}`)
