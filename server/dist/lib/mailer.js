@@ -10,7 +10,7 @@ export const transporter = nodemailer.createTransport({
 export const testMailerConnection = async () => {
     try {
         await transporter.verify();
-        console.log("|\/| Mailer is connected");
+        console.log("|\\/| Mailer is connected");
         return true;
     }
     catch (error) {
