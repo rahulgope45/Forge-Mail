@@ -7,6 +7,7 @@ import { verify } from "node:crypto";
 import { error } from "node:console";
 import { clearTokenCookies, setTokenCookies } from "../../utils/cookie.util.js";
 import { sendWelcomeMail } from "../../services/mail.service.js";
+import { emailQueue } from "../../queues/welcomEmail.queue.js";
 export const googleLogin = async (req, res) => {
     const url = getGoogleAuthUrl();
     res.redirect(url);
@@ -41,7 +42,20 @@ export const googleCallback = async (req, res) => {
             },
         });
         setTokenCookies(res, accessToken, refreshToken);
-        sendWelcomeMail(user.email, user.name || "").catch((err) => console.error("Failed to send welcome mail:", err));
+        //====== Setting workers here =====
+        // sendWelcomeMail(user.email, user.name || "").catch((err)=>
+        // console.error("Failed to send welcome mail:", err)
+        // )
+        await emailQueue.add("welcome-mail", {
+            to: user.email,
+            name: `Welcome back ${user.name}!`
+        }, {
+            attempts: 3,
+            backoff: {
+                type: "exponential",
+                delay: 5000,
+            },
+        });
         //============ Path no decided yet ===========
         res.redirect("/");
         console.log(`${user.name} Logged In  succesfully`);
