@@ -25,6 +25,10 @@ export const googleCallback = async (req, res) => {
             id: googleUser.id,
             email: googleUser.email,
         });
+        const existingUser = await prisma.user.findUnique({
+            where: { googleID: googleUser.id },
+        });
+        const newUser = !existingUser;
         const user = await prisma.user.upsert({
             where: { googleID: googleUser.id },
             update: {
@@ -48,7 +52,7 @@ export const googleCallback = async (req, res) => {
         // )
         await emailQueue.add("welcome-mail", {
             to: user.email,
-            subject: `Welcome back ${user.name}!`
+            subject: newUser ? `Welcome abord, ${user.name}!` : `Welcome back, ${user.name}!`
         }, {
             attempts: 3,
             backoff: {

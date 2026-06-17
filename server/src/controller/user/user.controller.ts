@@ -36,6 +36,12 @@ export const googleCallback = async (
 
         });
 
+        const existingUser = await prisma.user.findUnique({
+            where: {googleID: googleUser.id},
+        });
+
+        const newUser = !existingUser;
+
 
         const user = await prisma.user.upsert({
             where: { googleID: googleUser.id },
@@ -62,9 +68,11 @@ export const googleCallback = async (
         // console.error("Failed to send welcome mail:", err)
         // )
 
+        
+
         await emailQueue.add("welcome-mail",{
             to: user.email,
-            subject: `Welcome back ${user.name}!`
+            subject: newUser ? `Welcome abord, ${user.name}!` : `Welcome back, ${user.name}!`
         },{
             attempts: 3,
             backoff: {
