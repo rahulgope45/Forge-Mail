@@ -1,6 +1,6 @@
 export declare const redisConnection: {
     host: string;
-    port: string;
+    port: number;
     password: string | undefined;
     tls: {} | undefined;
 };
