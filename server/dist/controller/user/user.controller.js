@@ -111,7 +111,8 @@ export const logout = async (req, res) => {
     }
     catch (error) {
         clearTokenCookies(res);
-        res.status(200).json({ message: "Logged out" });
     }
+    clearTokenCookies(res);
+    res.status(200).json({ message: "Logged out" });
 };
 //# sourceMappingURL=user.controller.js.map

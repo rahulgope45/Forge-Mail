@@ -137,6 +137,9 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
         }
     } catch (error) {
         clearTokenCookies(res);
-        res.status(200).json({ message: "Logged out" });
+        
     }
+
+    clearTokenCookies(res);
+    res.status(200).json({ message: "Logged out" });
 };
