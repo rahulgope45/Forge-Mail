@@ -3,7 +3,7 @@ export const sendWelcomeMail = async (toEmail, name) => {
     await transporter.sendMail({
         from: `"Mail Forge <${process.env.GMAIL_USER}>"`,
         to: toEmail,
-        subject: "Welcome back to MailForge ;)",
+        subject: "Welcome to MailForge ;)",
         html: `
             <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto;">
                 <h2>Hey ${name}!</h2>

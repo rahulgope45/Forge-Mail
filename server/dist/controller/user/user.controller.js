@@ -48,7 +48,7 @@ export const googleCallback = async (req, res) => {
         // )
         await emailQueue.add("welcome-mail", {
             to: user.email,
-            name: `Welcome back ${user.name}!`
+            subject: `Welcome back ${user.name}!`
         }, {
             attempts: 3,
             backoff: {
