@@ -5,8 +5,6 @@ import jwt from 'jsonwebtoken'
 import { exchangeCodeForToken, getGoogleAuthUrl, getGoogleUser } from "../../services/auth.service.js";
 import { generateTokenPair, genrateJWT, verifyRefreshToken } from "../../utils/token.util.js";
 import { prisma } from "../../lib/prisma.js";
-import { verify } from "node:crypto";
-import { error } from "node:console";
 import { clearTokenCookies, setTokenCookies } from "../../utils/cookie.util.js";
 import { sendWelcomeMail } from "../../services/mail.service.js";
 import { emailQueue } from "../../queues/welcomEmail.queue.js";
@@ -68,7 +66,7 @@ export const googleCallback = async (
         // console.error("Failed to send welcome mail:", err)
         // )
 
-        
+        // === shifted to worker for better efficency ===
 
         await emailQueue.add("welcome-mail",{
             to: user.email,
