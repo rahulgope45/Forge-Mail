@@ -115,7 +115,7 @@ export const logout = async (req, res) => {
         }
     }
     catch (error) {
-        clearTokenCookies(res);
+        console.error("Logout error:", error);
     }
     clearTokenCookies(res);
     res.status(200).json({ message: "Logged out" });
