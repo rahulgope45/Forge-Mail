@@ -33,14 +33,16 @@ export const googleCallback = async (req, res) => {
                 email: googleUser.email,
                 name: googleUser.name,
                 avatar: googleUser.picture,
-                refreshToken: refreshToken
+                refreshToken: refreshToken,
+                googleRefreshToken: token.refresh_token ?? existingUser?.googleRefreshToken ?? null,
             },
             create: {
                 googleID: googleUser.id,
                 email: googleUser.email,
                 name: googleUser.name,
                 avatar: googleUser.picture,
-                refreshToken: refreshToken
+                refreshToken: refreshToken,
+                googleRefreshToken: token.refresh_token ?? null,
             },
         });
         setTokenCookies(res, accessToken, refreshToken);
