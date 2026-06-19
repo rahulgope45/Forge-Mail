@@ -25,6 +25,7 @@ export const googleCallback = async (
             return;
         }
         const token = await exchangeCodeForToken(code);
+        
         const googleUser = await getGoogleUser(token.access_token);
 
         const { accessToken, refreshToken } = generateTokenPair({
@@ -70,7 +71,7 @@ export const googleCallback = async (
 
         await emailQueue.add("welcome-mail",{
             to: user.email,
-            subject: newUser ? `Welcome abord, ${user.name}!` : `Welcome back, ${user.name}!`
+            name: newUser ? `Welcome abord, ${user.name}!` : `Welcome back, ${user.name}!`
         },{
             attempts: 3,
             backoff: {

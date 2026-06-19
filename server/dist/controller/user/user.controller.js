@@ -51,7 +51,7 @@ export const googleCallback = async (req, res) => {
         // === shifted to worker for better efficency ===
         await emailQueue.add("welcome-mail", {
             to: user.email,
-            subject: newUser ? `Welcome abord, ${user.name}!` : `Welcome back, ${user.name}!`
+            name: newUser ? `Welcome abord, ${user.name}!` : `Welcome back, ${user.name}!`
         }, {
             attempts: 3,
             backoff: {
