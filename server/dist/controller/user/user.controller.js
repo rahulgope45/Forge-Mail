@@ -19,10 +19,6 @@ export const googleCallback = async (req, res) => {
         }
         const token = await exchangeCodeForToken(code);
         const googleUser = await getGoogleUser(token.access_token);
-        const { accessToken, refreshToken } = generateTokenPair({
-            id: googleUser.id,
-            email: googleUser.email,
-        });
         const existingUser = await prisma.user.findUnique({
             where: { googleID: googleUser.id },
         });
@@ -33,17 +29,25 @@ export const googleCallback = async (req, res) => {
                 email: googleUser.email,
                 name: googleUser.name,
                 avatar: googleUser.picture,
-                refreshToken: refreshToken,
                 googleRefreshToken: token.refresh_token ?? existingUser?.googleRefreshToken ?? null,
+                //refreshToken: refreshToken,
             },
             create: {
                 googleID: googleUser.id,
                 email: googleUser.email,
                 name: googleUser.name,
                 avatar: googleUser.picture,
-                refreshToken: refreshToken,
                 googleRefreshToken: token.refresh_token ?? null,
+                //refreshToken: refreshToken,
             },
+        });
+        const { accessToken, refreshToken } = generateTokenPair({
+            id: user.id,
+            email: user.email,
+        });
+        await prisma.user.update({
+            where: { id: user.id },
+            data: { refreshToken },
         });
         setTokenCookies(res, accessToken, refreshToken);
         //====== Setting workers here =====
@@ -119,5 +123,29 @@ export const logout = async (req, res) => {
     }
     clearTokenCookies(res);
     res.status(200).json({ message: "Logged out" });
+};
+export const getMe = async (req, res) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: req.user.id },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                avatar: true,
+                createdAt: true,
+                // never select refreshToken / googleRefreshToken here
+            },
+        });
+        if (!user) {
+            res.status(404).json({ error: "User not found" });
+            return;
+        }
+        res.status(200).json({ user });
+    }
+    catch (error) {
+        console.error("getMe error:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 };
 //# sourceMappingURL=user.controller.js.map

@@ -1,11 +1,12 @@
 import dotenv from 'dotenv';
-dotenv.config()
+dotenv.config();
 import express, { type Request, type Response } from 'express';
 import cookieParser from 'cookie-parser';
 import {prisma,testDatabaseConnection} from './lib/prisma.js'
 import authRoutes from './routes/auth.routes.js'
 import { connectRedis } from './config/redis.js';
 import { testMailerConnection } from './lib/mailer.js';
+import testClient from './routes/test.route.js';
 
 const PORT = 3000;
 const app = express();
@@ -20,7 +21,7 @@ app.get('/',(req:Request,res:Response)=>{
 app.use('/api/auth',authRoutes)
 
 //Test to check Gmail Client is making or not
-
+app.use('/api',testClient)
 
 const startServer = async ()=>{
  console.log("Checking All The Apis");

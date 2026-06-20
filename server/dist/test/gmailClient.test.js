@@ -13,7 +13,8 @@ export const sendTestEmail = async (req, res) => {
             });
         }
         const gmail = await getGmailClient(user.googleRefreshToken);
-        console.log(gmail);
+        // console.log(gmail);
+        console.log("Gmail client ready for user:", user.email);
         res.json({
             message: "Gmail client created successfully",
         });

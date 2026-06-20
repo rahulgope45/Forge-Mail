@@ -8,6 +8,7 @@ import { prisma } from "../../lib/prisma.js";
 import { clearTokenCookies, setTokenCookies } from "../../utils/cookie.util.js";
 import { sendWelcomeMail } from "../../services/mail.service.js";
 import { emailQueue } from "../../queues/welcomEmail.queue.js";
+import type { AuthenticatedRequest } from "../../types/auth.types.js";
 
 
 export const googleLogin = async (req: Request, res: Response) => {
@@ -28,12 +29,7 @@ export const googleCallback = async (
         
         const googleUser = await getGoogleUser(token.access_token);
 
-        const { accessToken, refreshToken } = generateTokenPair({
-            id: googleUser.id,
-            email: googleUser.email,
-
-
-        });
+        
 
         const existingUser = await prisma.user.findUnique({
             where: {googleID: googleUser.id},
@@ -48,17 +44,28 @@ export const googleCallback = async (
                 email: googleUser.email,
                 name: googleUser.name,
                 avatar: googleUser.picture,
-                refreshToken: refreshToken,
                 googleRefreshToken: token.refresh_token ?? existingUser?.googleRefreshToken ?? null,
+                //refreshToken: refreshToken,
             },
             create: {
                 googleID: googleUser.id,
                 email: googleUser.email,
                 name: googleUser.name,
                 avatar: googleUser.picture,
-                refreshToken: refreshToken,
                 googleRefreshToken: token.refresh_token ?? null,
+                //refreshToken: refreshToken,
+                
             },
+        });
+
+        const { accessToken, refreshToken } = generateTokenPair({
+            id: user.id,
+            email: user.email,
+        });
+
+         await prisma.user.update({
+            where: { id: user.id },
+            data:  { refreshToken },
         });
 
         setTokenCookies(res, accessToken, refreshToken);
@@ -151,4 +158,31 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
 
     clearTokenCookies(res);
     res.status(200).json({ message: "Logged out" });
+};
+
+
+export const getMe = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: req.user!.id },
+            select: {
+                id:        true,
+                name:      true,
+                email:     true,
+                avatar:    true,
+                createdAt: true,
+                // never select refreshToken / googleRefreshToken here
+            },
+        });
+
+        if (!user) {
+            res.status(404).json({ error: "User not found" });
+            return;
+        }
+
+        res.status(200).json({ user });
+    } catch (error) {
+        console.error("getMe error:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 };
