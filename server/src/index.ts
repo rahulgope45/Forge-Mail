@@ -19,6 +19,7 @@ app.get('/',(req:Request,res:Response)=>{
 //Routes
 app.use('/api/auth',authRoutes)
 
+//Test to check Gmail Client is making or not
 
 
 const startServer = async ()=>{

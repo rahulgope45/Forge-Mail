@@ -36,5 +36,5 @@ export interface TokenPair {
 
 export interface AuthenticatedRequest extends Request {
     user?: JwtPayload
-    refreshToken: string
+    refreshToken?: string
 }

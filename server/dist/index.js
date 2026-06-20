@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 });
 //Routes
 app.use('/api/auth', authRoutes);
+//Test to check Gmail Client is making or not
 const startServer = async () => {
     console.log("Checking All The Apis");
     //======= Database Conection =======

@@ -31,6 +31,6 @@ export interface TokenPair {
 }
 export interface AuthenticatedRequest extends Request {
     user?: JwtPayload;
-    refreshToken: string;
+    refreshToken?: string;
 }
 //# sourceMappingURL=auth.types.d.ts.map
