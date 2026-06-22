@@ -109,6 +109,7 @@ export const googleCallback = async (
 
 export const refresh = async (req: Request, res: Response): Promise<void> => {
     try {
+         console.log("Refresh cookies:", req.cookies);
         const incomingRefreshToken = req.cookies?.refreshToken as string | undefined;
         if (!incomingRefreshToken) {
             res.status(401).json({ error: "No Refresh token" });

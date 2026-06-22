@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 export const genrateJWT = (payload) => {
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "15m" });
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "2m" });
 };
 export const genrateRefreshToken = (payload) => {
     return jwt.sign(payload, process.env.REFRESH_SECRET, { expiresIn: "2d" });

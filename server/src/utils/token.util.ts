@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import type { JwtPayload, TokenPair } from '../types/auth.types.js';
 
 export const genrateJWT = (payload: JwtPayload):string =>{
-    return jwt.sign(payload, process.env.JWT_SECRET!,{expiresIn: "15m"});
+    return jwt.sign(payload, process.env.JWT_SECRET!,{expiresIn: "2m"});
 };
 
 export const genrateRefreshToken = (payload: JwtPayload): string =>{

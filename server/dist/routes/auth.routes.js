@@ -9,6 +9,11 @@ router.get("/login", googleLogin);
 router.get("/callback", googleCallback);
 router.post("/logout", logout);
 router.get("/me", requireAuth, getMe);
-router.post("/refresh", requireAuth, refresh);
+router.get('/refresh', refresh);
+router.get("/debug-cookies", (req, res) => {
+    console.log(req.headers.cookie);
+    console.log(req.cookies);
+    res.json(req.cookies);
+});
 export default router;
 //# sourceMappingURL=auth.routes.js.map

@@ -2,7 +2,7 @@ export const setTokenCookies = (res, accessToken, refreshToken) => {
     res.cookie("token", accessToken, {
         httpOnly: true,
         secure: process.env.ENVIORNMENT === "production",
-        maxAge: 15 * 60 * 1000
+        maxAge: 2 * 60 * 1000
     });
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -10,6 +10,7 @@ export const setTokenCookies = (res, accessToken, refreshToken) => {
         maxAge: 2 * 24 * 60 * 60 * 1000,
         path: "/api/auth/refresh"
     });
+    console.log(res.getHeaders()["set-cookie"]);
 };
 export const clearTokenCookies = (res) => {
     res.clearCookie("token");
