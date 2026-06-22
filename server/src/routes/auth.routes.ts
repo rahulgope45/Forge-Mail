@@ -4,6 +4,7 @@ import {
   logout,
   googleCallback,
   getMe,
+  refresh,
 } from "../controller/user/user.controller.js";
 import { requireAuth } from "../Middleware/auth.middleware.js";
 import type { AuthenticatedRequest } from "../types/auth.types.js";
@@ -18,5 +19,6 @@ router.get("/login", googleLogin);
 router.get("/callback", googleCallback);
 router.post("/logout", logout);
 router.get("/me", requireAuth, getMe);
+router.post("/refresh",requireAuth,refresh)
 
 export default router;

@@ -49,6 +49,7 @@ export const googleCallback = async (req, res) => {
             where: { id: user.id },
             data: { refreshToken },
         });
+        console.log("JWT Refresh:", refreshToken);
         setTokenCookies(res, accessToken, refreshToken);
         //====== Setting workers here =====
         // sendWelcomeMail(user.email, user.name || "").catch((err)=>

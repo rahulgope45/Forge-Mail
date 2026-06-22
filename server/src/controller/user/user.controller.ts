@@ -68,6 +68,8 @@ export const googleCallback = async (
             data:  { refreshToken },
         });
 
+        console.log("JWT Refresh:", refreshToken);
+
         setTokenCookies(res, accessToken, refreshToken);
 
         //====== Setting workers here =====

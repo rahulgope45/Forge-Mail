@@ -7,13 +7,14 @@ export const requireAuth =(
     res:Response,
     next: NextFunction
 ): void =>{
+  console.log(req.cookies);
 
   const authHeader  = req.headers.authorization;
     const headerToken = authHeader?.startsWith("Bearer ")
         ? authHeader.split(" ")[1]
         : undefined;
 
-    // ✅ Fallback to cookie (for browser-based requests)
+    //  Fallback to cookie (for browser-based requests)
     const cookieToken = req.cookies?.token as string | undefined;
 
    const token = headerToken || cookieToken;
