@@ -7,7 +7,7 @@ export const requireAuth =(
     res:Response,
     next: NextFunction
 ): void =>{
-  console.log(req.cookies);
+  // console.log(req.cookies);
 
   const authHeader  = req.headers.authorization;
     const headerToken = authHeader?.startsWith("Bearer ")

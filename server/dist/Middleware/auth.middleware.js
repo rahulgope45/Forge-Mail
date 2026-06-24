@@ -1,6 +1,6 @@
 import { verifyJWT } from "../utils/token.util.js";
 export const requireAuth = (req, res, next) => {
-    console.log(req.cookies);
+    // console.log(req.cookies);
     const authHeader = req.headers.authorization;
     const headerToken = authHeader?.startsWith("Bearer ")
         ? authHeader.split(" ")[1]

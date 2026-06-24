@@ -1,0 +1,2 @@
+export declare const sendEmailWithGmail: (googleRefreshToken: string, to: string, subject: string, body: string) => Promise<import("googleapis-common").GaxiosResponseWithHTTP2<import("googleapis").gmail_v1.Schema$Message>>;
+//# sourceMappingURL=gmailSend.service.d.ts.map
