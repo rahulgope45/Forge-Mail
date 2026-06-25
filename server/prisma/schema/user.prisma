@@ -11,6 +11,9 @@ model User {
     provider           String   @default("google")
     createdAt          DateTime @default(now())
     updatedAt          DateTime @updatedAt()
+    mailJobs           MailJob[]
 
     @@map("users")
+
+
 }

@@ -1,0 +1,26 @@
+model MailJob {
+    id           String        @id @default(cuid())
+    userId       String
+    user         User          @relation(fields: [userId], references: [id])
+    to           String
+    subject      String
+    body         String
+    status       MailJobStatus @default(PENDING)
+    scheduledFor DateTime
+    errorReason  String?
+    messageId    String?
+    sentAt       DateTime?
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+
+    //@@index([batchId])
+    @@index([userId])
+    @@index([status])
+}
+
+enum MailJobStatus {
+    PENDING
+    SENT
+    FAILED_RETRYABLE
+    FAILED_PERMANENT
+}
