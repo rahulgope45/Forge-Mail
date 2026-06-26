@@ -13,6 +13,21 @@ export const Max_Recipients = 100;
 //     if (to === undefined || to === null) {
 //         return { valid: false, error: "to is required" };
 //     }
-//     const recipients = Array.isArray ? to : [to]
-// }
+//     const recipients = Array.isArray(to) ? to : [to];
+//     if(recipients.length > Max_Recipients){
+//          return {
+//             valid: false,
+//             error: `Cannot send to more than ${Max_Recipients} recipients per request`,
+//         };
+//     }
+//     const invalidEmail = recipients.filter(
+//         (email) => typeof email !== "string" || !EMAIL_REGEX.test(email)
+//     );
+//     if(invalidEmail.length > 0){
+//         return {
+//             valid: false,
+//             error: `nvalid email address(es): ${invalidEmail.join(", ")}`
+//         }
+//     };
+// };
 //# sourceMappingURL=MailSend.validation.js.map
