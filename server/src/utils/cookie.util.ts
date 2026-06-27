@@ -4,7 +4,7 @@ export const setTokenCookies =(res:Response,accessToken:string,refreshToken:stri
     res.cookie("token", accessToken,{
         httpOnly:true,
         secure: process.env.ENVIORNMENT === "production",
-        maxAge: 2* 60* 1000
+        maxAge: 30* 60* 1000
     });
 
     res.cookie("refreshToken",refreshToken,{
@@ -14,7 +14,7 @@ export const setTokenCookies =(res:Response,accessToken:string,refreshToken:stri
         path: "/api/auth/refresh"
     })
 
-     console.log(res.getHeaders()["set-cookie"]);
+    //  console.log(res.getHeaders()["set-cookie"]);
 };
 
 export const clearTokenCookies = (res:Response):void=>{

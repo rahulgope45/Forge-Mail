@@ -40,4 +40,5 @@ export const createMailJob = async ({ userId, to, subject, body, sendAt }) => {
         jobIds: mailJob.map((j) => j.id)
     };
 };
+console.log('Mail Worker Started');
 //# sourceMappingURL=Mailsend.producer.js.map

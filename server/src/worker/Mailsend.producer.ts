@@ -72,3 +72,5 @@ export const createMailJob = async ({
         )
     }
 }
+
+console.log('Mail Worker Started');
