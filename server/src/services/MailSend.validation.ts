@@ -16,7 +16,7 @@ export interface ValidationResult {
 
 export const validateMailSendRequest = (
     payload: Partial<MailSendRequestBody>
-) => {
+): ValidationResult => {
 
     const { to, subject, body, sendAt } = payload;
 
@@ -34,25 +34,52 @@ export const validateMailSendRequest = (
 
     const recipients = Array.isArray(to) ? to : [to];
 
-    if(recipients.length > Max_Recipients){
-         return {
+    if (recipients.length > Max_Recipients) {
+        return {
             valid: false,
             error: `Cannot send to more than ${Max_Recipients} recipients per request`,
         };
     }
-    
+
     const invalidEmail = recipients.filter(
         (email) => typeof email !== "string" || !EMAIL_REGEX.test(email)
     );
 
-    if(invalidEmail.length > 0){
+    if (invalidEmail.length > 0) {
         return {
             valid: false,
             error: `nvalid email address(es): ${invalidEmail.join(", ")}`
         }
     };
 
+    const uniqueCount = new Set(recipients.map((e) => e.toLowerCase())).size; // Used Set to keep the recipients unique
+
+    if (uniqueCount !== recipients.length) {
+        return {
+            valid: false,
+            error: "Duplicate recipient email addresses in request"
+        }
+    }
+
+    if (sendAt !== undefined) {
+        const parsed = new Date(sendAt);
+
+        if (Number.isNaN(parsed.getTime())) {
+            return {
+                valid: false, error: `Invalid sendAt date: ${sendAt}`
+            }
+        }
+
+        if (parsed.getTime() < Date.now()){
+            return {
+                valid: false, error: `sendAt cannot be in the past`
+            }
+        }
+    }
 
 
-   
+    return {
+        valid: true
+    }
+
 };

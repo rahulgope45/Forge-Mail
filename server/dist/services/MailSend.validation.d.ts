@@ -9,4 +9,5 @@ export interface ValidationResult {
     valid: boolean;
     error?: string;
 }
+export declare const validateMailSendRequest: (payload: Partial<MailSendRequestBody>) => ValidationResult;
 //# sourceMappingURL=MailSend.validation.d.ts.map
