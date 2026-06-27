@@ -4,6 +4,7 @@ import express, { type Request, type Response } from 'express';
 import cookieParser from 'cookie-parser';
 import {prisma,testDatabaseConnection} from './lib/prisma.js'
 import authRoutes from './routes/auth.routes.js'
+import mailSendRoutes from './routes/mailSender/mailSend.route.js';
 import { connectRedis } from './config/redis.js';
 import { testMailerConnection } from './lib/mailer.js';
 import testClient from './routes/test.route.js';
@@ -17,8 +18,14 @@ app.get('/',(req:Request,res:Response)=>{
     res.json({msg:"Server startup"})
 });
 
-//Routes
-app.use('/api/auth',authRoutes)
+// ========= Routes =========
+
+//====== Auth Routes ======
+app.use('/api/auth',authRoutes);
+
+// =====Mail Send Routes =====
+
+app.use('/api/mail',mailSendRoutes);
 
 //Test to check Gmail Client is making or not
 app.use('/api',testClient)

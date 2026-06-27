@@ -3,7 +3,7 @@ interface CreateMailJobParams {
     to: string | string[];
     subject: string;
     body: string;
-    sendAt?: string;
+    sendAt?: string | undefined;
 }
 interface CreateMailJobResult {
     jobIds: string[];

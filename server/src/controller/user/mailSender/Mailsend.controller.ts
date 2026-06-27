@@ -40,7 +40,7 @@ export const sendMail = async (req: Request, res: Response) => {
             to: payload.to!,
             subject: payload.subject!,
             body: payload.body!,
-            sendAt: payload.sendAt!,
+            sendAt: payload.sendAt,
         })
 
         return res.status(200).json({
