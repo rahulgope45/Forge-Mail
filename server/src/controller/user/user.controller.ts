@@ -92,7 +92,7 @@ export const googleCallback = async (
         })
 
         //============ Path no decided yet ===========
-        res.redirect("/")
+        res.redirect(`${process.env.FRONTEND_URL}/dashboard`)
         console.log(`${user.name} Logged In  succesfully`)
 
         // console.log("=== Token Debug ===");

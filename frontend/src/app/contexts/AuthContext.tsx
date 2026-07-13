@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   function signInWithGoogle() {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`;
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`;
   }
 
   async function logout() {

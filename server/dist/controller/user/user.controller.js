@@ -67,7 +67,7 @@ export const googleCallback = async (req, res) => {
             },
         });
         //============ Path no decided yet ===========
-        res.redirect("/");
+        res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
         console.log(`${user.name} Logged In  succesfully`);
         // console.log("=== Token Debug ===");
         // console.log("Access Token:", accessToken);
