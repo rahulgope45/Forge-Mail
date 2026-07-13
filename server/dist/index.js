@@ -8,7 +8,7 @@ import mailSendRoutes from './routes/mailSender/mailSend.route.js';
 import { connectRedis } from './config/redis.js';
 import { testMailerConnection } from './lib/mailer.js';
 import testClient from './routes/test.route.js';
-const PORT = 3000;
+const PORT = 3002;
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
