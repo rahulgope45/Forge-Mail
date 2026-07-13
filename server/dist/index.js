@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
+import cors from 'cors';
 import express, {} from 'express';
 import cookieParser from 'cookie-parser';
 import { prisma, testDatabaseConnection } from './lib/prisma.js';
@@ -8,13 +9,22 @@ import mailSendRoutes from './routes/mailSender/mailSend.route.js';
 import { connectRedis } from './config/redis.js';
 import { testMailerConnection } from './lib/mailer.js';
 import testClient from './routes/test.route.js';
-const PORT = 3000;
+const PORT = 3002;
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.get('/', (req, res) => {
     res.json({ msg: "Server startup" });
 });
+// ======== Allowed Origins =====
+const allowedOrigins = [
+    "http://localhost:3000",
+    "http://10.222.154.94:3000"
+];
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true
+}));
 // ========= Routes =========
 //====== Auth Routes ======
 app.use('/api/auth', authRoutes);
