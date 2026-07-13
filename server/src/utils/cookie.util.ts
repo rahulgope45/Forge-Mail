@@ -4,7 +4,7 @@ export const setTokenCookies =(res:Response,accessToken:string,refreshToken:stri
     res.cookie("token", accessToken,{
         httpOnly:true,
         secure: process.env.ENVIORNMENT === "production",
-        maxAge: 30* 60* 1000
+        maxAge: 1* 60* 1000
     });
 
     res.cookie("refreshToken",refreshToken,{

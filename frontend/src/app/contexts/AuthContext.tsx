@@ -18,6 +18,10 @@ type AuthContextType = {
   refetchUser: () => Promise<void>;
 };
 
+type MeResponse ={
+  user: User
+}
+
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -26,7 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function fetchUser() {
     try {
-      const { data } = await api.get("/api/auth/me");
+      const { data } = await api.get<MeResponse>("/api/auth/me");
       setUser(data.user);
     } catch {
       setUser(null);

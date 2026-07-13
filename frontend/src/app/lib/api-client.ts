@@ -1,4 +1,6 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError } from "axios";
+import type { InternalAxiosRequestConfig } from "axios";
+
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -27,13 +29,12 @@ api.interceptors.response.use(
     };
 
     const isRefreshCall = originalRequest.url?.includes("/auth/refresh");
-    const isAuthCheck = originalRequest.url?.includes("/auth/me");
+    // const isAuthCheck = originalRequest.url?.includes("/auth/me");
 
     if (
       error.response?.status !== 401 ||
       originalRequest._retry ||
-      isRefreshCall ||
-      isAuthCheck
+      isRefreshCall 
     ) {
       return Promise.reject(error);
     }

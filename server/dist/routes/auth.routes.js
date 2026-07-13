@@ -9,7 +9,7 @@ router.get("/login", googleLogin);
 router.get("/callback", googleCallback);
 router.post("/logout", logout);
 router.get("/me", requireAuth, getMe);
-router.get('/refresh', refresh);
+router.post('/refresh', refresh);
 router.get("/debug-cookies", (req, res) => {
     console.log(req.headers.cookie);
     console.log(req.cookies);

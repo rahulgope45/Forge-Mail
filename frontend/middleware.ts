@@ -1,14 +1,14 @@
-// middleware.ts
+// proxy.ts (project root, same location as middleware.ts was)
 import { NextRequest, NextResponse } from "next/server";
 
 const PROTECTED_PATHS = ["/dashboard", "/mail-send"];
 const AUTH_PATHS = ["/login"];
 
-export function middleware(request: NextRequest) {
+export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // match your actual access-token cookie name from the backend
-  const hasSession = request.cookies.has("accessToken");
+  const hasSession = request.cookies.has("token");
+  console.log("PROXY RAN:", pathname, "hasSession:", hasSession);
 
   const isProtected = PROTECTED_PATHS.some((path) =>
     pathname.startsWith(path)
