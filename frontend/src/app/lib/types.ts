@@ -8,5 +8,6 @@ export type MailJob = {
   status: MailJobStatus;
   scheduledFor: string;
   sentAt: string | null;
+  createdAt: string
   errorReason: string | null;
 };
