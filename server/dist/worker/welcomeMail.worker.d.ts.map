@@ -1,1 +1,1 @@
-{"version":3,"file":"welcomeMail.worker.d.ts","sourceRoot":"","sources":["../../src/worker/welcomeMail.worker.ts"],"names":[],"mappings":""}
+{"version":3,"file":"welcomeMail.worker.d.ts","sourceRoot":"","sources":["../../src/worker/welcomeMail.worker.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,MAAM,EAAE,MAAM,QAAQ,CAAC;AAKhC,QAAA,MAAM,MAAM,0BAuBX,CAAA;AAaD,eAAe,MAAM,CAAC"}
