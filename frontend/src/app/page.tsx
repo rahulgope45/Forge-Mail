@@ -4,10 +4,12 @@ import Hero from "./Component/Hero";
 import WhyUs from "./Component/WhyUs";
 import Pricing from "./Component/Pricing";
 import Footer from "./Component/Footer";
+import SmoothScrollProvider from "./Component/SmoothScrollProvider";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <SmoothScrollProvider>
+      <div className="min-h-screen bg-white">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 md:px-8">
         <span className="text-xl font-medium tracking-tight text-neutral-900">
           mailforge
@@ -22,5 +24,7 @@ export default function Home() {
 
       <Footer />
     </div>
+    </SmoothScrollProvider>
+    
   );
 }
