@@ -1,8 +1,8 @@
 // src/app/components/landing/Pricing.tsx
 const PLANS = [
   { name: "Starter", price: "$0" },
-  { name: "Pro", price: "$—" },
-  { name: "Team", price: "$—" },
+  { name: "Pro", price: "$2" },
+  { name: "Team", price: "$5" },
 ];
 
 export default function Pricing() {
