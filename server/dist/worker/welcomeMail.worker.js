@@ -20,5 +20,6 @@ worker.on("completed", (job) => {
 worker.on("failed", (job, err) => {
     console.log(`Job ${job?.id} failed: ${err.message}`);
 });
-console.log('Worker Started');
+console.log('Welcome Mail Wokrker Started');
+export default worker;
 //# sourceMappingURL=welcomeMail.worker.js.map
