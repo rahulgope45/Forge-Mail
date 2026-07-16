@@ -4,6 +4,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 COPY package*.json tsconfig.json ./
+COPY prisma ./prisma
 
 RUN npm ci
 
@@ -20,13 +21,10 @@ WORKDIR /app
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3002
 
 USER node
 
 CMD [ "node", "dist/index.js" ]
-
-
-
-
