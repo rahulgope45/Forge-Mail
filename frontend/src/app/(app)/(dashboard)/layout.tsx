@@ -47,7 +47,7 @@ export default function DashboardLayout({
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-8">
           {/* Left: wordmark + nav */}
           <div className="flex items-center gap-10">
-            <Link href="/dashboard" className="text-xl font-medium tracking-tight text-neutral-900">
+            <Link href="/" className="text-xl font-medium tracking-tight text-neutral-900">
               mailforge
             </Link>
 
@@ -97,7 +97,7 @@ export default function DashboardLayout({
                 )}
                 <Link
                   onClick={() => setProfileOpen(false)}
-                  href="/settings"
+                  href="/profile"
                   className="flex h-10 items-center rounded-md px-3 text-[14px] font-medium text-neutral-700 transition hover:bg-neutral-50"
                 >
                   Profile
