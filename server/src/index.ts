@@ -22,9 +22,11 @@ app.get('/', (req: Request, res: Response) => {
 
 // ======== Allowed Origins =====
 
+
+
 const allowedOrigins = [
    "http://localhost:3000",
-   "http://10.222.154.94:3000"
+   "http://10.222.154.94:3000", process.env.FRONTEND_URL!
 ]
 
 app.use(

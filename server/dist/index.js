@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 // ======== Allowed Origins =====
 const allowedOrigins = [
     "http://localhost:3000",
-    "http://10.222.154.94:3000"
+    "http://10.222.154.94:3000", process.env.FRONTEND_URL
 ];
 app.use(cors({
     origin: allowedOrigins,
