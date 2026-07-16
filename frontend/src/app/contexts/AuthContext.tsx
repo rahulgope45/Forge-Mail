@@ -9,6 +9,7 @@ type User = {
   email: string;
   name?: string;
   avatar: string;
+  createdAt: string;
 } | null;
 
 type AuthContextType = {

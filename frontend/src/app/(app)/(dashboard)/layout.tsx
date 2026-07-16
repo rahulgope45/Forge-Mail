@@ -97,7 +97,7 @@ export default function DashboardLayout({
                 )}
                 <Link
                   onClick={() => setProfileOpen(false)}
-                  href="/settings"
+                  href="/profile"
                   className="flex h-10 items-center rounded-md px-3 text-[14px] font-medium text-neutral-700 transition hover:bg-neutral-50"
                 >
                   Profile
