@@ -5,6 +5,7 @@ export const setTokenCookies =(res:Response,accessToken:string,refreshToken:stri
         httpOnly:true,
         secure: process.env.ENVIORNMENT === "production",
         sameSite: process.env.ENVIORNMENT === "production" ? "none" : "lax",
+        partitioned:true,
         maxAge: 1* 60* 1000
     });
 
@@ -13,6 +14,7 @@ export const setTokenCookies =(res:Response,accessToken:string,refreshToken:stri
         secure: process.env.ENVIORNMENT === "production",
         sameSite: process.env.ENVIORNMENT === "production" ? 'none' : 'lax',
         maxAge: 2* 24* 60* 60* 1000,
+        partitioned: true,
         path: "/api/auth/refresh"
     })
 
