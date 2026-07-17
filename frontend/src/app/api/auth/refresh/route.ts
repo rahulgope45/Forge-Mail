@@ -10,14 +10,20 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  const data = await backendRes.json();
-  const response = NextResponse.json(data, { status: backendRes.status });
+ const data = await backendRes.json();
 
-  // read Set-Cookie from Render's response, re-set on Next.js's own domain
-  const setCookie = backendRes.headers.get("set-cookie");
-  if (setCookie) {
-    response.headers.set("Set-Cookie", setCookie);
-  }
+const response = NextResponse.json(data, { status: backendRes.status });
 
-  return response;
+response.cookies.set("token", data.token, {
+  httpOnly: true,
+  maxAge: 60,
+});
+
+response.cookies.set("refreshToken", data.refreshToken, {
+  httpOnly: true,
+  path: "/api/auth/refresh",
+  maxAge: 2 * 24 * 60 * 60,
+});
+
+return response;
 }
