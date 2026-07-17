@@ -189,3 +189,81 @@ export const getMe = async (req: AuthenticatedRequest, res: Response): Promise<v
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
+// ===Fallback for Production
+
+export const exchangeCode = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const code = req.query.code as string;
+        if (!code) {
+            res.status(400).json({ message: "Authorization code missing" });
+            return;
+        }
+
+        const token = await exchangeCodeForToken(code);
+        const googleUser = await getGoogleUser(token.access_token);
+
+        const existingUser = await prisma.user.findUnique({
+            where: { googleID: googleUser.id },
+        });
+
+        const newUser = !existingUser;
+
+        const user = await prisma.user.upsert({
+            where: { googleID: googleUser.id },
+            update: {
+                email: googleUser.email,
+                name: googleUser.name,
+                avatar: googleUser.picture,
+                googleRefreshToken: token.refresh_token ?? existingUser?.googleRefreshToken ?? null,
+            },
+            create: {
+                googleID: googleUser.id,
+                email: googleUser.email,
+                name: googleUser.name,
+                avatar: googleUser.picture,
+                googleRefreshToken: token.refresh_token ?? null,
+            },
+        });
+
+        const { accessToken, refreshToken } = generateTokenPair({
+            id: user.id,
+            email: user.email,
+        });
+
+        await prisma.user.update({
+            where: { id: user.id },
+            data: { refreshToken },
+        });
+
+        await emailQueue.add("welcome-mail", {
+            to: user.email,
+            name: newUser ? `Welcome abord, ${user.name}!` : `Welcome back, ${user.name}!`
+        }, {
+            attempts: 3,
+            backoff: {
+                type: "exponential",
+                delay: 5000,
+            },
+        });
+
+        // returns JSON — Next.js callback route sets the cookies, not this
+        res.status(200).json({
+            accessToken,
+            refreshToken,
+            user: {
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                avatar: user.avatar,
+                createdAt: user.createdAt,
+            },
+        });
+
+        console.log(`${user.name} exchanged code succesfully`);
+
+    } catch (error) {
+        console.error("Exchange error:", error);
+        res.status(500).json({ error: "Authentication failed" });
+    }
+};
