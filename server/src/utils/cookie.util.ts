@@ -5,7 +5,6 @@ export const setTokenCookies =(res:Response,accessToken:string,refreshToken:stri
         httpOnly:true,
         secure: process.env.ENVIORNMENT === "production",
         sameSite: process.env.ENVIORNMENT === "production" ? "none" : "lax",
-        partitioned:true,
         maxAge: 1* 60* 1000
     });
 

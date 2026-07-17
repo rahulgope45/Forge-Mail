@@ -113,7 +113,7 @@ function MailSendPage() {
 
     try {
       const { data } = await api.post<{ message: string; jobIds: string[] }>(
-        "/api/mail/send-mail",
+        "/mail/send-mail", // ======== Using proxy not calling directly so I removed  /api ======
         {
           to: finalRecipients,
           subject,

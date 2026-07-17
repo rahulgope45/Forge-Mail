@@ -10,7 +10,7 @@ export function useMailJobs() {
   const [loading, setLoading] = useState(true);
 
   const fetchJobs = useCallback(async () => {
-    const { data } = await api.get("/api/mail/mail-jobs?page=1&pageSize=20");
+    const { data } = await api.get("/mail/mail-jobs?page=1&pageSize=20"); // ===== removed /api using proxy =====
     setJobs(data.jobs);
     setLoading(false);
   }, []);

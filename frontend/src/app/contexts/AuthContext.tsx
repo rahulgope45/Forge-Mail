@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function fetchUser() {
     try {
-      const { data } = await api.get<MeResponse>("/api/auth/me");
+      const { data } = await api.get<MeResponse>("/auth/me"); // === removed /api =====
       setUser(data.user);
     } catch {
       setUser(null);
@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function logout() {
-    await api.post("/api/auth/logout");
+    await api.post("/auth/logout"); //==== proxy removed /api
     setUser(null);
     window.location.href = "/";
   }
