@@ -18,9 +18,9 @@ export async function POST(request: NextRequest) {
     const response = NextResponse.json(data, { status: backendRes.status });
 
     // read Set-Cookie from Render's response, re-set on Next.js's own domain
-    const setCookie = backendRes.headers.get("token");
+    const setCookie = backendRes.headers.get("Set-Cookie");
     if (setCookie) {
-        response.headers.set("token", setCookie);
+        response.headers.set("Set-Cookie", setCookie);
     }
 
     return response;
