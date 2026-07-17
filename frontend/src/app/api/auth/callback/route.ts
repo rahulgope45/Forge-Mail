@@ -7,7 +7,8 @@ export async function GET(request: NextRequest) {
   const backendRes = await fetch(
     `${process.env.BACKEND_URL}/api/auth/exchange?code=${code}`
   );
-  const data = await backendRes.json(); // { accessToken, refreshToken, user }
+  const data = await backendRes.json();
+  console.log(data); // { accessToken, refreshToken, user }
 
   const response = NextResponse.redirect(new URL("/dashboard", request.url));
   response.cookies.set("token", data.accessToken, { httpOnly: true, maxAge: 60 });
