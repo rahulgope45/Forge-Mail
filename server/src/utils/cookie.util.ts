@@ -4,12 +4,14 @@ export const setTokenCookies =(res:Response,accessToken:string,refreshToken:stri
     res.cookie("token", accessToken,{
         httpOnly:true,
         secure: process.env.ENVIORNMENT === "production",
+        sameSite: process.env.ENVIORNMENT === "production" ? "none" : "lax",
         maxAge: 1* 60* 1000
     });
 
     res.cookie("refreshToken",refreshToken,{
         httpOnly:true,
         secure: process.env.ENVIORNMENT === "production",
+        sameSite: process.env.ENVIORNMENT === "production" ? 'none' : 'lax',
         maxAge: 2* 24* 60* 60* 1000,
         path: "/api/auth/refresh"
     })
@@ -18,6 +20,10 @@ export const setTokenCookies =(res:Response,accessToken:string,refreshToken:stri
 };
 
 export const clearTokenCookies = (res:Response):void=>{
-    res.clearCookie("token");
-    res.clearCookie("refreshToken",{path: '/api/auth/refresh'})
+    res.clearCookie("token",{
+        sameSite: process.env.ENVIORNMENT === "production" ? 'none' : 'lax',
+    });
+    res.clearCookie("refreshToken",{path: '/api/auth/refresh',
+        sameSite: process.env.ENVIORNMENT === "production" ? 'none' : 'lax'
+    })
 };
