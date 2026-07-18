@@ -5,8 +5,11 @@ import WhyUs from "./Component/WhyUs";
 import Pricing from "./Component/Pricing";
 import Footer from "./Component/Footer";
 import SmoothScrollProvider from "./Component/SmoothScrollProvider";
+import DevModeToast from "./Component/DevModeToast";
+
 
 export default function Home() {
+  
   return (
     <SmoothScrollProvider>
       <div className="min-h-screen bg-white">
@@ -17,6 +20,7 @@ export default function Home() {
       </header>
 
       <main>
+        <DevModeToast/>
         <Hero />
         <WhyUs />
         <Pricing />
