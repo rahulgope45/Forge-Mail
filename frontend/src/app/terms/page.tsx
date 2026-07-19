@@ -145,10 +145,10 @@ export default function TermsAndConditionsPage() {
       <footer className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-neutral-100 pt-6 text-xs text-neutral-400">
         <p>&copy; 2026 mailforge. All rights reserved.</p>
         <div className="flex gap-5">
-          <Link href="/privacy" className="hover:text-neutral-700">
+          <p className="hover:text-neutral-700">
             Privacy Policy
-          </Link>
-          <Link href="/support" className="hover:text-neutral-700">
+          </p>
+          <Link href="/https://rahulgope.vercel.app" className="hover:text-neutral-700">
             Contact Support
           </Link>
         </div>

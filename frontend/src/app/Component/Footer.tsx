@@ -10,13 +10,13 @@ export default function Footer() {
 
           <div className="flex gap-5 text-sm text-neutral-500">
             {/* TODO: replace with your actual links */}
-            <a href="mailto:you@example.com" className="hover:text-neutral-900">
+            <a href="mailto:rahuleile456@google.com.com" className="hover:text-neutral-900">
               Email
             </a>
-            <a href="https://github.com/yourusername" className="hover:text-neutral-900">
+            <a href="https://github.com/rahulgope45" className="hover:text-neutral-900">
               GitHub
             </a>
-            <a href="https://linkedin.com/in/yourusername" className="hover:text-neutral-900">
+            <a href="https://www.linkedin.com/in/rahul-gope-808476369" className="hover:text-neutral-900">
               LinkedIn
             </a>
           </div>
